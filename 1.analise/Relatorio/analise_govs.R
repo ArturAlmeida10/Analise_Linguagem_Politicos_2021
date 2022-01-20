@@ -338,9 +338,9 @@ plot_cand <- function(cand, titulo) {
     ggtitle(titulo) +
     xlab("Palavras \n") +
     ylab("Frequência") +
-    labs(caption = "Fonte: Quaest Consultoria \n Elaborado por: Artur Almeida") + 
+    labs(caption = "Fonte: Quaest Consultoria \n") + 
     coord_flip() +
-    tema_quaest() +
+    tema_quaest_web() +
     theme(axis.text.x = element_blank(),
           axis.text.y = element_text(size = 13, hjust = 1),
           axis.title.x = element_blank(),
@@ -365,35 +365,31 @@ library(grid)
 plot_grid <- function(cand, titulo) {
   ggplot(cand) +
     aes(x = reorder(Palavras, Freq), y = Freq) +
-    geom_bar(stat = "identity", fill = "#10ACB8", width = 0.9) +
+    geom_bar(stat = "identity", fill = "#10ACB8", width = 0.8) +
     geom_text(aes(label=Freq), color = "white", vjust = 0.4, hjust = 1.3, size = 3.8) +
     ggtitle(titulo) +
     xlab("Palavras \n") +
     ylab("Frequência") +
     coord_flip() +
-    tema_quaest() +
+    tema_quaest_web() +
     theme(axis.text.x = element_blank(),
           axis.text.y = element_text(size = 13, hjust = 1),
           axis.title.x = element_blank(),
           axis.title.y = element_blank(),
-          plot.title = element_text(face = "bold", size = 18, vjust = -3.2, hjust = 0.1),
+          plot.title = element_text(face = "bold", size = 18, vjust = 1, hjust = 0.1),
           plot.caption = element_text(size = 10, face = "bold"))
 }
 
 # Formatação gráficos individuais
-plot_camilo2 <- plot_grid(camilo, "Camilo Santana\n")
-plot_claudio2 <- plot_grid(claudio, "Cláudio Castro\n")
-plot_dino2 <- plot_grid(dino, "Fávio Dino\n")
-plot_leite2 <- plot_grid(leite, "Eduardo Leite\n")
-plot_doria2 <- plot_grid(doria, "João Doria\n")
-plot_zema2 <- plot_grid(zema, "Romeu Zema\n")
+plot_camilo2 <- plot_grid(camilo, "Camilo Santana")
+plot_claudio2 <- plot_grid(claudio, "Cláudio Castro")
+plot_dino2 <- plot_grid(dino, "Fávio Dino")
+plot_leite2 <- plot_grid(leite, "Eduardo Leite")
+plot_doria2 <- plot_grid(doria, "João Doria")
+plot_zema2 <- plot_grid(zema, "Romeu Zema")
 
 grid_cands <- grid.arrange(plot_camilo2, plot_claudio2, plot_leite2, plot_dino2, plot_doria2, plot_zema2, 
-             ncol = 3, bottom = textGrob("Fonte: Quaest Consultoria \nElaborado por: Artur Almeida ", 
-                                         just = "right",
-                                         x = 1,
-                                         gp = gpar(fontface = "bold", fontsize = 10)
-                                         ))
+             ncol = 3)
 # Exporta tudo:
 # Camilo
 png("top10_camilo.png", width = 600, height = 500)

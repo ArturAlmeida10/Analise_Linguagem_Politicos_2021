@@ -294,16 +294,15 @@ plot_cand <- function(cand, titulo) {
     ggtitle(titulo) +
     xlab("Palavras \n") +
     ylab("Frequência") +
-    labs(caption = "Fonte: Quaest Consultoria \n Elaborado por: Artur Almeida") + 
+    labs(caption = "Fonte: Quaest Consultoria \n") + 
     coord_flip() +
-    tema_quaest() +
+    tema_quaest_web() +
     theme(axis.text.x = element_blank(),
           axis.text.y = element_text(size = 13, hjust = 1),
           axis.title.x = element_blank(),
           axis.title.y = element_blank(),
           plot.title = element_text(face = "bold", size = 16, vjust = -0.8),
-          plot.caption = element_text(size = 10, face = "bold"),
-          plot.background = element_rect(fill = "transparent"))
+          plot.caption = element_text(size = 10, face = "bold"))
 }
 
 # Aplicando função para cada Cand
@@ -315,27 +314,27 @@ plot_doria <- plot_cand(doria, "Top-10 Palavras mais utilizadas por João Doria 
 
 # Exporta tudo:
 # Lula
-png("top10_lula.png", width = 550, height = 500)
+png("top10_lula.png", width = 600, height = 500)
 plot_lula
 dev.off()
 
 # Bolsonaro
-png("top10_bolsonaro.png", width = 550, height = 500)
+png("top10_bolsonaro.png", width = 600, height = 500)
 plot_bolsonaro
 dev.off()
 
 # Moro
-png("top10_moro.png", width = 550, height = 500)
+png("top10_moro.png", width = 600, height = 500)
 plot_moro
 dev.off()
 
 # Ciro
-png("top10_ciro.png", width = 550, height = 500)
+png("top10_ciro.png", width = 600, height = 500)
 plot_ciro
 dev.off()
 
 # Doria
-png("top10_doria.png", width = 550, height = 500)
+png("top10_doria.png", width = 600, height = 500)
 plot_doria
 dev.off()
 
@@ -347,33 +346,48 @@ library(grid)
 plot_grid <- function(cand, titulo) {
   ggplot(cand) +
     aes(x = reorder(Palavras, Freq), y = Freq) +
-    geom_bar(stat = "identity", fill = "#10ACB8", width = 0.9) +
+    geom_bar(stat = "identity", fill = "#10ACB8", width = 0.8) +
     geom_text(aes(label=Freq), color = "white", vjust = 0.4, hjust = 1.3, size = 3.8) +
     ggtitle(titulo) +
     xlab("Palavras \n") +
     ylab("Frequência") +
     coord_flip() +
-    tema_quaest() +
+    tema_quaest_web() +
     theme(axis.text.x = element_blank(),
           axis.text.y = element_text(size = 13, hjust = 1),
           axis.title.x = element_blank(),
           axis.title.y = element_blank(),
-          plot.title = element_text(face = "bold", size = 18, vjust = -3.2, hjust = 0.1),
+          plot.title = element_text(face = "bold", size = 18, vjust = 1, hjust = 0.1),
           plot.caption = element_text(size = 10, face = "bold"))
 }
 
 # Formatação gráficos individuais
-plot_lula2 <- plot_grid(lula, "Lula\n")
-plot_bolsonaro2 <- plot_grid(bolsonaro, "Bolsonaro\n")
-plot_moro2 <- plot_grid(moro, "Sergio Moro\n")
-plot_ciro2 <- plot_grid(ciro, "Ciro Gomes\n")
-plot_doria2 <- plot_grid(doria, "João Doria\n")
+plot_lula2 <- plot_grid(lula, "Lula")
+plot_bolsonaro2 <- plot_grid(bolsonaro, "Bolsonaro")
+plot_moro2 <- plot_grid(moro, "Sergio Moro")
+plot_ciro2 <- plot_grid(ciro, "Ciro Gomes")
+plot_doria2 <- plot_grid(doria, "João Doria")
+plot_completa <- ggplot(lula) +
+  aes(x = reorder(Palavras, Freq), y = Freq) +
+  geom_bar(stat = "identity", fill = "#ecf0f2", width = 0) +
+  #geom_text(aes(label=Freq), color = "white", vjust = 0.4, hjust = 1.3, size = 3.8) +
+  ggtitle("titulo") +
+  xlab("Palavras \n") +
+  ylab("Frequência") +
+  coord_flip() +
+  tema_quaest_web() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        plot.title = element_blank(),
+        plot.caption = element_blank(),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid = element_blank()
+        )
 
-grid_cands <- grid.arrange(plot_lula2, plot_bolsonaro2, plot_moro2, plot_ciro2, plot_doria2, 
-                           ncol = 3, bottom = textGrob("Fonte: Quaest Consultoria \nElaborado por: Artur Almeida ", 
-                                                       just = "right",
-                                                       x = 1,
-                                                       gp = gpar(fontface = "bold", fontsize = 10)
-                           ))
+grid_cands <- grid.arrange(plot_lula2, plot_bolsonaro2, plot_moro2, plot_ciro2, plot_doria2, plot_completa,
+                           ncol = 3)
 # Fim
 rm(list = ls())

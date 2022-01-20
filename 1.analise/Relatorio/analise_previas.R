@@ -28,7 +28,7 @@ dicio <- c("https", "para", "mais", "pelo","foram", "pela","entre",
 
 ##### Análise Leite #############################################################
 # Abrir posts totais
-bd_leite <- read_xlsx(here("0.dados/govs/leite/leite.xlsx"))
+bd_leite <- read_xlsx(here("C:/Users/artur/OneDrive/Área de Trabalho/Quaest/Análise - Top Palavras/0.dados/govs/leite/leite.xlsx"))
 
 # Alterar modelo de data para eliminar a hora
 bd_leite$Date <- as.Date(bd_leite$Date)
@@ -86,7 +86,7 @@ leite <- bd_palavras_leite %>%
 
 ##### Análise Doria ########################################################
 # Abrir posts
-bd_doria <- read_xlsx("doria/doria.xlsx")
+bd_doria <- read_xlsx(here("C:/Users/artur/OneDrive/Área de Trabalho/Quaest/Análise - Top Palavras/0.dados/govs/doria/doria.xlsx"))
 
 # Alterar modelo de data para eliminar a hora
 bd_doria$Date <- as.Date(bd_doria$Date)
@@ -159,7 +159,7 @@ plot_grid <- function(cand, titulo) {
     xlab("Palavras \n") +
     ylab("Frequência") +
     coord_flip() +
-    tema_quaest() +
+    tema_quaest_web() +
     theme(axis.text.x = element_blank(),
           axis.text.y = element_text(size = 10, hjust = 1),
           axis.title.x = element_blank(),
@@ -175,12 +175,7 @@ plot_doria <- plot_grid(doria, "João Doria ")
 # Grid
 library(gridExtra)
 library(grid)
-grid_previas <- grid.arrange(plot_leite, plot_doria, ncol = 1,
-             bottom = textGrob("Fonte: Quaest Consultoria \nElaborado por: Artur Almeida ",
-                               just = "right",
-                               x = 1,
-                               gp = gpar(fontface = "bold", fontsize = 10)
-                               ))
+grid_previas <- grid.arrange(plot_leite, plot_doria, ncol = 1)
 
 # Exporta Grid
 png("grid_top15_doriaXleite.png", width = 600, height = 500)
@@ -206,19 +201,19 @@ plot_previas <- ggplot(agregado_top15) +
   geom_text(aes(label=Freq), position = position_dodge(width = 0.9), color = "white",
             hjust = 1.4, vjust = 0.25, size = 2.5) +
   labs(title = "Top-15 palavras mais utilizadas pelos candidatos durante as Prévias do PSDB",
-       subtitle = "\nPeríodo analisado: 20/09/2021 a 27/11/2021",
-       caption = "\n Fonte: Quaest Consultoria \nElaborado por: Artur Almeida",
+       subtitle = "Período analisado: 20/09/2021 a 27/11/2021\n",
+       caption = "\n Fonte: Quaest Consultoria \n",
        y = "Frequência",
        fill = "Candidatos") + 
   coord_flip() +
-  theme_minimal() +
+  tema_quaest_web() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_text(size = 11, hjust = 1, face = "bold"),
         axis.title.y = element_blank(),
-        plot.title = element_text(face = "bold", size = 14, vjust = -0.8),
-        plot.caption = element_text(size = 10, face = "bold", hjust = 1.4),
-        legend.title = element_text(face = "bold"),
-        aspect.ratio = 1)
+        axis.title.x = element_blank(),
+        plot.title = element_text(face = "bold", size = 14),
+        plot.caption = element_text(size = 10, face = "bold"),
+        legend.title = element_text(face = "bold"))
 
 # Exporta
 png("top_agregado_previas.png", width = 750, height = 600)
